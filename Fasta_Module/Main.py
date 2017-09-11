@@ -7,7 +7,6 @@ species = ['Arabidopsis_Thaliana',
            'Xenopus_Laevis',
            'Dictyostelium_Discoideum']
 
-
 def main():
     fasta_file_manager = FastaFileManager(*species)
     fasta = Fasta(fasta_file_manager.get_sequence('mRna_Sequence.fasta'))
