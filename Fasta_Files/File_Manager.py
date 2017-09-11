@@ -22,7 +22,7 @@ class FastaFileManager(object):
         Gets the sequence files
         :param sequence_file_standard: The type of file e.g mRna_Sequence.fasta, Rna_Sequence.fasta
         :param key: You can provide a key if you want to only get the file of a specific specie
-        :return: a list with the paths (string) all the files
+        :return: a list with the paths (string)/ all the files
         """
         try:
             if key is None:
