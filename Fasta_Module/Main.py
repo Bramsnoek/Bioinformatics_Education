@@ -10,19 +10,23 @@ species = ['Arabidopsis_Thaliana',
 
 
 def main():
-    fasta_file_manager = FastaFileManager(*species)
-    fasta = Fasta(fasta_file_manager.get_sequence('mRna_Sequence.fasta'))
+    file_manager = FastaFileManager(*species)
+    fasta_manager = Fasta(file_manager.get_sequence('mRna_Sequence.fasta'))
 
-    gc_results = fasta.get_gc()
-    length_results = fasta.get_sequence_length()
+    gc_results = fasta_manager.get_gc()
+    length_results = fasta_manager.get_sequence_length()
 
     plt.bar(range(len(gc_results)), gc_results.values(), align='center')
     plt.xticks(range(len(gc_results)), gc_results.keys())
+    plt.ylabel("Gc% in genome")
+    plt.xlabel("Genome name")
 
     plt.show()
 
     plt.bar(range(len(length_results)), length_results.values(), align='center')
     plt.xticks(range(len(length_results)), length_results.keys())
+    plt.ylabel("Length of genome sequence")
+    plt.xlabel("Genome name")
 
     plt.show()
 

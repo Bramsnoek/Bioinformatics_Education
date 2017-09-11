@@ -3,13 +3,12 @@ class Fasta(dict):
     A manager for multiple Fasta files containing multiple functions that will gather data about the containing
     sequences
     """
-    def __init__(self, *args):
+    def __init__(self, *files):
         dict.__init__(self)
-        self.current_sequence_reference = ''
-        self.current_sequence = []
+        self.__current_sequence_reference = ''
+        self.__current_sequence = []
 
-        for file in enumerate(args):
-            print(file)
+        for file in enumerate(files):
             self.__fasta_to_dict(file[1])
 
     def get_sequence_length(self, key=None):
@@ -39,7 +38,8 @@ class Fasta(dict):
             if key is None:
                 seq_dict = {}
                 for reference, sequence in self.items():
-                    seq_dict[reference] = sum([1.0 for nucleotide in sequence if nucleotide in ['G', 'C']]) / len(sequence) * 100
+                    seq_dict[reference] = sum([1.0 for nucleotide in sequence if nucleotide in ['G', 'C']])\
+                                          / len(sequence) * 100
                 return seq_dict
 
             sequence = self[key]
@@ -49,22 +49,22 @@ class Fasta(dict):
 
     def __fasta_to_dict(self, files):
         """
-        :param file: The Fasta file containing sequence(s)
+        :param files: The Fasta files containing sequence(s)
         """
         try:
             for file in files:
                 for line in open(file):
-                    if line.startswith(">") and self.current_sequence_reference == '':
-                        self.current_sequence_reference = line.split(' ')[0]
+                    if line.startswith(">") and self.__current_sequence_reference == '':
+                        self.__current_sequence_reference = line.split(' ')[0]
 
-                    elif line.startswith(">") and self.current_sequence_reference != '':
-                        self[self.current_sequence_reference] = ''.join(self.current_sequence)
-                        self.current_sequence_reference = line.split(' ')[0]
-                        self.current_sequence = []
+                    elif line.startswith(">") and self.__current_sequence_reference != '':
+                        self[self.__current_sequence_reference] = ''.join(self.__current_sequence)
+                        self.__current_sequence_reference = line.split(' ')[0]
+                        self.__current_sequence = []
 
                     else:
-                        self.current_sequence.append(line.rstrip())
+                        self.__current_sequence.append(line.rstrip())
 
-                self[self.current_sequence_reference] = ''.join(self.current_sequence)
+                self[self.__current_sequence_reference] = ''.join(self.__current_sequence)
         except FileNotFoundError as e:
             print(e)

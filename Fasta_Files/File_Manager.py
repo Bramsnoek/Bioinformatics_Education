@@ -6,16 +6,16 @@ class FastaFileManager(object):
     A manager for accessing the sequence files of the species given
     """
     def __init__(self, *species):
-        self._species = []
+        self.__species = []
 
         for specie in enumerate(species):
-            self._species.append(specie[1])
+            self.__species.append(specie[1])
 
     def get_species(self):
         """
-        :return: All species given when innitialized
+        :return: All species given when initialized
         """
-        return self._species
+        return self.__species
 
     def get_sequence(self, sequence_file_standard, key=None):
         """
@@ -27,9 +27,8 @@ class FastaFileManager(object):
         try:
             if key is None:
                 sequences = []
-                for specie in self._species:
-                    sequences.append(
-                        self.__get_joined_sequence_path(specie, sequence_file_standard))
+                for specie in self.__species:
+                    sequences.append(self.__get_joined_sequence_path(specie, sequence_file_standard))
 
                 return sequences
 
