@@ -10,9 +10,9 @@ species = ['Arabidopsis_Thaliana',
 
 def main():
     fasta_file_manager = FastaFileManager(*species)
-    print(fasta_file_manager.get_sequence('mRna_Sequence.fasta'))
-
-    fasta = Fasta()
+    fasta = Fasta(fasta_file_manager.get_sequence('mRna_Sequence.fasta'))
+    print(fasta.get_gc())
+    print(fasta.get_sequence_length())
     print(fasta)
 
 

@@ -17,11 +17,11 @@ class FastaFileManager(object):
                 sequences = []
                 for specie in self._species:
                     sequences.append(
-                        open(self.__get_joined_sequence_path(specie, sequence_file_standard)))
+                        self.__get_joined_sequence_path(specie, sequence_file_standard))
 
                 return sequences
 
-            return open(self.__get_joined_sequence_path(key, sequence_file_standard))
+            return self.__get_joined_sequence_path(key, sequence_file_standard)
 
         except FileNotFoundError as e:
             print(e)
