@@ -11,6 +11,23 @@ class Fasta(dict):
         for file in enumerate(args):
             self.__fasta_to_dict(file[1])
 
+    def get_sequence_length(self, key=None):
+        """
+        :param key: The sequence of which the length is being calculated
+        :return: The function returns the length of a single sequence, if no key is provided
+        it will return a dictionary of every sequence and their GC%
+        """
+        try:
+            if key is None:
+                seq_dict = {}
+                for reference, sequence in self.items():
+                    seq_dict[reference] = len(sequence)
+                return seq_dict
+
+            return len(self[key])
+        except KeyError:
+            print('Please provide an existing sequence name')
+
     def __fasta_to_dict(self, file):
         """
         :param file: The Fasta file containing sequence(s)
