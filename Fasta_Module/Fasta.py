@@ -3,7 +3,7 @@ class Fasta(dict):
     A manager for multiple Fasta files containing multiple functions that will gather data about the containing
     sequences
     """
-    def __init__(self, *files):
+    def __init__(self, *files: list):
         dict.__init__(self)
         self.__current_sequence_reference = ''
         self.__current_sequence = []
@@ -11,7 +11,7 @@ class Fasta(dict):
         for file in enumerate(files):
             self.__fasta_to_dict(file[1])
 
-    def get_sequence_length(self, key=None):
+    def get_sequence_length(self, key: object = None) -> object:
         """
         :param key: The sequence of which the length is being calculated
         :return: The function returns the length of a single sequence, if no key is provided
@@ -28,7 +28,7 @@ class Fasta(dict):
         except KeyError:
             print('Please provide an existing sequence name')
 
-    def get_gc(self, key=None):
+    def get_gc(self, key: str = None) -> dict:
         """
         :param key: The sequence of which the GC% is being calculated
         :return: The function returns the GC% of a single sequence, if no key is provided
@@ -47,7 +47,7 @@ class Fasta(dict):
         except KeyError:
             print('Please provide an existing sequence name')
 
-    def __fasta_to_dict(self, files):
+    def __fasta_to_dict(self, files: list):
         """
         :param files: The Fasta files containing sequence(s)
         """

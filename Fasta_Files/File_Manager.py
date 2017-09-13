@@ -5,19 +5,19 @@ class FastaFileManager(object):
     """
     A manager for accessing the sequence files of the species given
     """
-    def __init__(self, *species):
+    def __init__(self, *species: list):
         self.__species = []
 
         for specie in enumerate(species):
             self.__species.append(specie[1])
 
-    def get_species(self):
+    def get_species(self) -> list:
         """
         :return: All species given when initialized
         """
         return self.__species
 
-    def get_sequence(self, sequence_file_standard, key=None):
+    def get_sequence(self, sequence_file_standard: str, key=None) -> list:
         """
         Gets the sequence files
         :param sequence_file_standard: The type of file e.g mRna_Sequence.fasta, Rna_Sequence.fasta
@@ -37,5 +37,5 @@ class FastaFileManager(object):
         except FileNotFoundError as e:
             print(e)
 
-    def __get_joined_sequence_path(self, specie, standard):
+    def __get_joined_sequence_path(self, specie: str, standard: str):
         return str('/'.join([str(os.path.dirname(__file__)), specie, standard]))
