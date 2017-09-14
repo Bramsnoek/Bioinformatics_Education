@@ -10,6 +10,9 @@ class Fasta(dict):
 
         for file in enumerate(files):
             self.__fasta_to_dict(file[1])
+    
+    def add_genome_files(self, files):
+        self.__fasta_to_dict(files)
 
     def get_sequence_length(self, key: object = None) -> [dict, float]:
         """
