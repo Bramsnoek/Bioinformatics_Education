@@ -90,6 +90,8 @@ celerybeat-schedule
 venv/
 ENV/
 
+.idea/workspace.xml
+
 # Spyder project settings
 .spyderproject
 .spyproject
