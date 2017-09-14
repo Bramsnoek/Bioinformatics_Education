@@ -11,7 +11,7 @@ class Fasta(dict):
         for file in enumerate(files):
             self.__fasta_to_dict(file[1])
 
-    def get_sequence_length(self, key: object = None) -> object:
+    def get_sequence_length(self, key: object = None) -> [dict, float]:
         """
         :param key: The sequence of which the length is being calculated
         :return: The function returns the length of a single sequence, if no key is provided
@@ -28,7 +28,7 @@ class Fasta(dict):
         except KeyError:
             print('Please provide an existing sequence name')
 
-    def get_gc(self, key: str = None) -> dict:
+    def get_gc(self, key: str = None) -> [dict, float]:
         """
         :param key: The sequence of which the GC% is being calculated
         :return: The function returns the GC% of a single sequence, if no key is provided
