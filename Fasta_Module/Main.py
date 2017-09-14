@@ -31,6 +31,7 @@ def show_doublebar_chart(bar_width: float, opacity: float,
     plt.xlabel(xlabel)
     plt.xticks(index + bar_width, xticks)
     plt.legend()
+    plt.tight_layout()
 
     plt.show()
 
