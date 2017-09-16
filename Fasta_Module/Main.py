@@ -2,6 +2,7 @@ from Fasta_Files.File_Manager import FastaFileManager
 from Fasta_Module.Fasta import Fasta
 import matplotlib.pyplot as plt
 import numpy as np
+from pprint import pprint
 
 
 species = {'Arabidopsis_Thaliana': 36.6,
@@ -68,18 +69,18 @@ def show_triplebar_chart(bar_width: float, opacity: float,
     plt.show()
 
 
-
 def main():
     file_manager = FastaFileManager(*species.keys())
-    fasta_manager_genome = Fasta(file_manager.get_sequence('Rna_Sequence.fasta'))
+    fasta_manager_genome = Fasta(file_manager.get_sequence('Genoom_Sequence.fasta'),
+                                 file_manager.get_sequence('Protein_Sequence.fasta'))
     fasta_manager_mRNA = Fasta(file_manager.get_sequence('mRna_Sequence.fasta'))
 
     gc_results_genome = fasta_manager_genome.get_gc()
+    derk_results = fasta_manager_genome.get_derk()
     gc_results_mRNA = fasta_manager_mRNA.get_gc()
 
-    length_results_genome = fasta_manager_genome.get_sequence_length()
-    length_results_mRNA = fasta_manager_mRNA.get_sequence_length()
-    length_known = [10000, 12000, 12832, 7432, 29320]
+    # length_results_genome = fasta_manager_genome.get_sequence_length()
+    # length_results_mRNA = fasta_manager_mRNA.get_sequence_length()
 
     show_triplebar_chart(0.3, 0.8, gc_results_genome.values(), list(species.values()), gc_results_mRNA.values(), list(species.keys()), 5,
                          "GC% in different genomes for different organisms",
@@ -88,14 +89,14 @@ def main():
                          "Genome sequence GC%",
                          "Known GC%",
                          "mRNA sequence GC%")
-
-    show_triplebar_chart(0.3, 0.8, length_results_genome.values(), length_known, length_results_mRNA.values(), list(species.keys()), 5,
-                         "Length of different genomes for different organisms",
+    #
+    show_doublebar_chart(0.3, 0.8, [derk_count[0] for derk_count in derk_results.values()],
+                         [net_charge[1] for net_charge in derk_results.values()], list(species.keys()), 5,
+                         "DERK% and Net Charge for different protein sequences for different species",
                          "Length of genome",
                          "Specie name",
-                         "Genome sequence Length",
-                         "Known Length",
-                         "mRNA sequence length")
+                         "DERK %",
+                         "Net Charge")
 
 
 if __name__ == '__main__':
