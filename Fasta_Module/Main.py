@@ -79,6 +79,8 @@ def main():
     derk_results = fasta_manager_genome.get_derk()
     gc_results_mRNA = fasta_manager_mRNA.get_gc()
 
+    pprint(fasta_manager_genome)
+
     # length_results_genome = fasta_manager_genome.get_sequence_length()
     # length_results_mRNA = fasta_manager_mRNA.get_sequence_length()
 
@@ -89,11 +91,11 @@ def main():
                          "Genome sequence GC%",
                          "Known GC%",
                          "mRNA sequence GC%")
-    #
+
     show_doublebar_chart(0.3, 0.8, [derk_count[0] for derk_count in derk_results.values()],
                          [net_charge[1] for net_charge in derk_results.values()], list(species.keys()), 5,
                          "DERK% and Net Charge for different protein sequences for different species",
-                         "Length of genome",
+                         "DERK% and Net Charge",
                          "Specie name",
                          "DERK %",
                          "Net Charge")

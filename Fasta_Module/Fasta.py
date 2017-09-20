@@ -52,7 +52,7 @@ class Fasta(dict):
                     r_k_count = sum([1.0 for amino_acid in sequence if amino_acid in ['R', 'K']])
                     d_e_count = sum([1.0 for amino_acid in sequence if amino_acid in ['D', 'E']])
 
-                    seq_dict[reference] =[r_k_count + d_e_count, r_k_count - d_e_count]
+                    seq_dict[reference] = [((r_k_count + d_e_count) / len(sequence)) * 100, r_k_count - d_e_count]
 
                 return seq_dict
 
@@ -60,7 +60,7 @@ class Fasta(dict):
             r_k_count = sum([1.0 for amino_acid in sequence if amino_acid in ['R', 'K']])
             d_e_count = sum([1.0 for amino_acid in sequence if amino_acid in ['D', 'E']])
 
-            return [r_k_count + d_e_count, r_k_count - d_e_count]
+            return [((r_k_count + d_e_count) / len(sequence)) * 100, r_k_count - d_e_count]
         except KeyError:
             print('Please provide an existing sequence name')
 
@@ -100,9 +100,8 @@ class Fasta(dict):
                     else:
                         current_line = line.rstrip()
                         if self.__current_sequence_type is None:
-                            self.__current_sequence_type = SequenceType.PROTEIN if \
-                                any(letter in current_line for letter in SequenceType.get_differentiating_protein_letters()) \
-                                else SequenceType.GENOMIC
+                            self.__current_sequence_type = SequenceType.PROTEIN if SequenceType.check_is_protein(current_line) \
+                                                            else SequenceType.GENOMIC
 
                         self.__current_sequence.append(current_line)
 
@@ -117,5 +116,9 @@ class SequenceType(Enum):
     GENOMIC = 2
 
     @staticmethod
-    def get_differentiating_protein_letters():
-        return ['L', 'P', 'W', 'Y', 'Q', 'E', 'R', 'V', 'I', 'F', 'M', 'S', 'N', 'D', 'K', 'H']
+    def check_is_protein(sequence):
+        for char in sequence:
+            if char in ['L', 'P', 'W', 'Y', 'Q', 'E', 'R', 'V', 'I', 'F', 'M', 'S', 'N', 'D', 'K', 'H']:
+                return True
+
+        return False
