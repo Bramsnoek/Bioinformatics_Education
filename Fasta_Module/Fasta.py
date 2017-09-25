@@ -1,5 +1,30 @@
 from enum import Enum
 
+molecular_weights = {
+    "A": 89,
+    "R": 174,
+    "N": 132,
+    "D": 133,
+    "B": 133,
+    "C": 121,
+    "Q": 146,
+    "E": 147,
+    "Z": 147,
+    "G": 75,
+    "H": 155,
+    "I": 131,
+    "L": 131,
+    "K": 146,
+    "M": 149,
+    "F": 165,
+    "P": 115,
+    "S": 105,
+    "T": 119,
+    "W": 204,
+    "Y": 181,
+    "V": 117
+}
+
 
 class Fasta(dict):
     """
@@ -80,6 +105,24 @@ class Fasta(dict):
 
             sequence = self[key]
             return(sum([1.0 for nucleotide in sequence if nucleotide in ['G', 'C']]) / len(sequence)) * 100
+        except KeyError:
+            print('Please provide an existing sequence name')
+
+    def get_molecular_weight(self, key: str = None) -> [dict, float]:
+        """
+        :param key: The sequence of which the molecular weight is being calculated
+        :return: The function returns the molecular weight of a single sequence, if no key is provided
+        it will return a dictionary of every sequence with SequenceType.PROTEIN and their molecular weight
+        """
+        try:
+            if key is None:
+                seq_dict = {}
+                for reference, sequence in self[SequenceType.PROTEIN].items():
+                    seq_dict[reference] = sum([molecular_weights[aminoacid] for aminoacid in sequence])
+                return seq_dict
+
+            sequence = self[key]
+            return sum([molecular_weights[aminoacid] for aminoacid in sequence])
         except KeyError:
             print('Please provide an existing sequence name')
 
