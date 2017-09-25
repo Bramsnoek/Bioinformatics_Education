@@ -118,7 +118,4 @@ class SequenceType(Enum):
     @staticmethod
     def check_is_protein(sequence):
         for char in sequence:
-            if char in ['L', 'P', 'W', 'Y', 'Q', 'E', 'R', 'V', 'I', 'F', 'M', 'S', 'N', 'D', 'K', 'H']:
-                return True
-
-        return False
+            return char in ['L', 'P', 'W', 'Y', 'Q', 'E', 'R', 'V', 'I', 'F', 'M', 'S', 'N', 'D', 'K', 'H']
