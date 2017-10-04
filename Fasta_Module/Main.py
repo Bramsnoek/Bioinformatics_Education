@@ -2,6 +2,7 @@ from Fasta_Files.File_Manager import FastaFileManager
 from Fasta_Module.Fasta import Fasta
 import matplotlib.pyplot as plt
 import numpy as np
+from Fasta_Module.Fasta import SequenceType
 from pprint import pprint
 
 
@@ -79,14 +80,11 @@ def main():
     derk_results = fasta_manager_genome.get_derk()
     gc_results_mRNA = fasta_manager_mRNA.get_gc()
 
-    weight_results = fasta_manager_genome.get_molecular_weight()
-    pprint(weight_results)
-    print("Weight differ from uniprot because of bonds being formed beween aminoacids, "
-          "when these bonds form a h2o molecul is formed, for every aminoacid "
-          "this weight has to be reducted"
-          "from the total, then it will be closer")
 
-    pprint(fasta_manager_genome)
+
+    weight_results = fasta_manager_genome.get_molecular_weight()
+
+    pprint(fasta_manager_genome.get_pairwise_alignment_table(SequenceType.PROTEIN))
 
     # length_results_genome = fasta_manager_genome.get_sequence_length()
     # length_results_mRNA = fasta_manager_mRNA.get_sequence_length()

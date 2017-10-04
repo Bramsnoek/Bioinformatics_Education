@@ -1,4 +1,5 @@
 from enum import Enum
+from Fasta_Module.N_W import Needle
 
 molecular_weights = {
     "A": 89,
@@ -107,6 +108,28 @@ class Fasta(dict):
             return(sum([1.0 for nucleotide in sequence if nucleotide in ['G', 'C']]) / len(sequence)) * 100
         except KeyError:
             print('Please provide an existing sequence name')
+
+    def get_pairwise_alignment_table(self, key) -> dict:
+        """
+        :param key: The sequence type of which the pairwise allignment percentage is being calculated
+        :return: Returns a dictionary of all sequences compared to all other sequences and their %
+        """
+        sequences, sequence_names = list(self[key].values()), list(self[key].keys())
+        pairwise_alignment_table = dict.fromkeys(sequence_names, {})
+
+        for i in range(len(sequences)):
+            for j in range(i+1, len(sequences)):
+                sequence_1, sequence_2 = sequences[i], sequences[j]
+
+                needle = Needle()
+
+                identity_percentage = needle.needle(sequence_1, sequence_2)
+
+                if not sequence_names[i] == sequence_names[j]:
+                    pairwise_alignment_table[sequence_names[i]][sequence_names[j]] = identity_percentage
+
+
+        return pairwise_alignment_table
 
     def get_molecular_weight(self, key: str = None) -> [dict, float]:
         """
