@@ -80,11 +80,9 @@ def main():
     derk_results = fasta_manager_genome.get_derk()
     gc_results_mRNA = fasta_manager_mRNA.get_gc()
 
-
-
     weight_results = fasta_manager_genome.get_molecular_weight()
-
-    pprint(fasta_manager_genome.get_pairwise_alignment_table(SequenceType.PROTEIN))
+    alignment_results = fasta_manager_genome.get_pairwise_alignment_table(SequenceType.PROTEIN)
+    pprint(alignment_results)
 
     # length_results_genome = fasta_manager_genome.get_sequence_length()
     # length_results_mRNA = fasta_manager_mRNA.get_sequence_length()

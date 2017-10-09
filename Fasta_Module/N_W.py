@@ -36,9 +36,6 @@ class Needle:
 
                 cost[row][column] = max(sub_cost, del_cost, ins_cost)
 
-        print("cost matrix:")
-        pprint(cost)
-
         #Traceback step
         align1, align2 = '', ''
         row, column = N, M
@@ -49,8 +46,6 @@ class Needle:
             cost_left = cost[row][column-1]
             cost_up = cost[row-1][column]
 
-            #Determine which way to move inside the matrix by using the 3 possibilities/functions we used before
-            #But now reverse them, this way you can 'traceback' which matrix-index was used to calculate this matrix-index
             if cost_current == cost_diag + self.__match(seq1[row-1], seq2[column-1]):
                 #Move diagonally up in the matrix
                 aminoacid1, aminoacid2 = seq1[row-1], seq2[column-1]
@@ -90,7 +85,7 @@ class Needle:
             aminoacid1 = align1[i]
             aminoacid2 = align2[i]
 
-            if(aminoacid1 == aminoacid2):
+            if aminoacid1 == aminoacid2:
                 symbolic_link += '|'
                 identity_percentage += 1
                 seq_cost += self.__match(aminoacid1, aminoacid2)
@@ -101,7 +96,6 @@ class Needle:
         identity_percentage = identity_percentage/align_length * 100
 
         print('Identity % = {} %'.format(round(identity_percentage, 2)))
-        print('Seq_cost = {} \n'.format(seq_cost))
         print(align1)
         print(symbolic_link)
         print(align2)

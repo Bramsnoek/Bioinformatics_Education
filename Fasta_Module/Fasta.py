@@ -111,7 +111,7 @@ class Fasta(dict):
 
     def get_pairwise_alignment_table(self, key) -> dict:
         """
-        :param key: The sequence type of which the pairwise allignment percentage is being calculated
+        :param key: The sequence type of which the pairwise alignment percentage is being calculated
         :return: Returns a dictionary of all sequences compared to all other sequences and their %
         """
         sequences, sequence_names = list(self[key].values()), list(self[key].keys())
@@ -121,18 +121,20 @@ class Fasta(dict):
             for j in range(i+1, len(sequences)):
                 sequence_1, sequence_2 = sequences[i], sequences[j]
 
-                needle = Needle()
+                print("Calculating identity % between {} and {}".format(sequence_names[i], sequence_names[j]))
 
+                needle = Needle()
                 identity_percentage = needle.needle(sequence_1, sequence_2)
 
-                if not sequence_names[i] == sequence_names[j]:
-                    pairwise_alignment_table[sequence_names[i]][sequence_names[j]] = identity_percentage
+                print("Finished calculating identity % between {} and {}\n".format(sequence_names[i], sequence_names[j]))
 
+            if not sequence_names[i] == sequence_names[j]:
+                    pairwise_alignment_table[sequence_names[i]][sequence_names[j]] = identity_percentage
 
         return pairwise_alignment_table
 
     def get_molecular_weight(self, key: str = None) -> [dict, float]:
-        """
+        """sequence1
         :param key: The sequence of which the molecular weight is being calculated
         :return: The function returns the molecular weight of a single sequence, if no key is provided
         it will return a dictionary of every sequence with SequenceType.PROTEIN and their molecular weight
